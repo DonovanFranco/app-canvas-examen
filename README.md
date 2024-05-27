@@ -20,3 +20,5 @@ Space Legend es un juego de acción en 2D que se juega desde una perspectiva de 
 pantalla táctil, dependiendo de la plataforma de juego. El Space Legend puede moverse de izquierda a derecha en la pantalla y disparar hacia arriba para destruir las naves alienígenas 
 que se aproximan. El jugador debe esquivar los ataques enemigos y recolectar power-ups para mejorar sus habilidades y aumentar sus posibilidades de éxito. El juego presenta diferentes 
 niveles de dificultad y un sistema de puntuación para desafiar a los jugadores a superar sus mejores registros y convertirse en verdaderos héroes espaciales.
+
+![game-logo](https://github.com/DonovanFranco/app-canvas-examen/assets/161343179/ea92ff76-68b4-4554-a010-18dfaaa87bd7)
