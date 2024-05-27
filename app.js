@@ -14,7 +14,17 @@ canvas.style.background = "#3093f0";
 let score = 0;
 let highScore = localStorage.getItem('highScore') || 0; // Obtiene la puntuación más alta almacenada en localStorage
 const scoreDisplay = document.getElementById('score');
-updateScoreDisplay(); // Muestra la puntuación al cargar la página
+const levelDisplay = document.getElementById('level');
+const timerDisplay = document.getElementById('timer');
+
+let level = 1;
+let timeRemaining = 60; // tiempo en segundos para cada nivel
+let circlesPopped = 0;
+let circlesGenerated = 0;
+
+updateScoreDisplay();
+updateLevelDisplay();
+updateTimerDisplay();
 
 // Variable para almacenar las coordenadas del mouse
 let mouseX = 0;
@@ -90,9 +100,10 @@ function createCircle() {
 
     const color = "rgba(0, 0, 255, 0.5)"; // Color azul translúcido
     const text = circles.length + 1;
-    const speed = Math.random() * 2 + 1;
+    const speed = (Math.random() * 2 + 1) * (1 + (level - 1) * 0.1); // Incrementa la velocidad en cada nivel
 
     circles.push(new Circle(x, y, radius, color, text, speed));
+    circlesGenerated++;
 }
 
 function updateCircles() {
@@ -151,6 +162,7 @@ canvas.addEventListener('mousedown', function(evt) {
     circles.forEach((circle, index) => {
         if (circle.isPointInside(clickX, clickY)) {
             circles.splice(index, 1); // Elimina el círculo
+            circlesPopped++; // Incrementa el conteo de círculos reventados
             score += 10; // Incrementa la puntuación
             if (score > highScore) {
                 highScore = score;
@@ -164,5 +176,51 @@ function updateScoreDisplay() {
     scoreDisplay.textContent = `Puntuación: ${score} | Puntuación Más Alta: ${highScore}`;
 }
 
-setInterval(createCircle, 1000); // Crea un nuevo círculo cada segundo
-updateCircles(); // Llama a la función para actualizar los círculos
+function updateLevelDisplay() {
+    levelDisplay.textContent = `Nivel: ${level}`;
+}
+
+function updateTimerDisplay() {
+    timerDisplay.textContent = `Tiempo restante: ${timeRemaining}s`;
+}
+
+function startLevel() {
+    circles = [];
+    circlesGenerated = 0;
+    circlesPopped = 0;
+    timeRemaining = 60;
+
+    const levelInterval = setInterval(() => {
+        timeRemaining--;
+        updateTimerDisplay();
+        if (timeRemaining <= 0) {
+            clearInterval(levelInterval);
+            checkLevelCompletion();
+        }
+    }, 1000);
+
+    setInterval(createCircle, 1000); // Crea un nuevo círculo cada segundo
+}
+
+function checkLevelCompletion() {
+    const requiredPopped = circlesGenerated * 0.6;
+    if (circlesPopped >= requiredPopped) {
+        level++;
+        updateLevelDisplay();
+        startLevel();
+    } else {
+        alert("¡Fin del juego! No se alcanzó el objetivo.");
+        resetGame();
+    }
+}
+
+function resetGame() {
+    score = 0;
+    level = 1;
+    updateScoreDisplay();
+    updateLevelDisplay();
+    startLevel();
+}
+
+updateCircles();
+startLevel();
