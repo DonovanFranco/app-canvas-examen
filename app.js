@@ -1,4 +1,4 @@
-const canvas = document.getElementById("canvas");
+const canvas = document.getElementById("game-canvas");
 let ctx = canvas.getContext("2d");
 
 // Obtiene las dimensiones de la pantalla actual

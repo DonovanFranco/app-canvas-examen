@@ -12,15 +12,30 @@
         #canvas {
             border: 2px solid black; /* Borde negro de 2px */
         }
+        header img {
+            max-width: 100px;
+            height: auto;
+        }
+        main {
+            padding: 20px;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
-    
-                <canvas id="canvas" class="w-100"></canvas>
-            </div>
-        
+        <header class="text-center my-4">
+            <h1>Videojuego de Interactividad con Gráficos 2D</h1>
+            <img src="ruta/a/tu/imagen.png" alt="Imagen del Videojuego">
+        </header>
+        <main class="d-flex justify-content-center">
+            <canvas id="game-canvas" class="w-100"></canvas>
+        </main>
+        <footer class="text-center my-4">
+            <p>Creado por Donovan Urazh Franco</p>
+        </footer>
+    </div>
+
     <!-- Incluir Bootstrap JS (opcional) -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="app.js"></script>
