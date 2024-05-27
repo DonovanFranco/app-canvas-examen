@@ -1,52 +1,88 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+    <!-- Metadatos básicos para la codificación de caracteres y la vista adaptable -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Videojuego 2D</title>
+    
+    <!-- Título del documento -->
+    <title>Space Legend</title>
+    <link rel="icon" href="img/game-logo.png" type="image/png">
+    
+    <!-- Enlace a la hoja de estilos de Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Estilos CSS internos para personalizar el canvas y el texto -->
     <style>
         canvas {
-            display: block;
-            margin: 0 auto;
-            background-image: url('img/tierra.jpg'); /* Cambiar la ruta por la ubicación de tu imagen */
-            background-size: cover;
+            display: block; /* Elimina el margen automático */
+            margin: 0 auto; /* Centra el canvas horizontalmente */
+            background-image: url('img/tierra.jpg'); /* Imagen de fondo para el canvas */
+            background-size: cover; /* La imagen cubre todo el canvas */
         }
-        body {
-            cursor: url('laser.png'), auto;
-        }
-        .custom-cursor {
-            cursor: url('laser.png'), auto;
-        }
-        #level, #timer {
-            text-align: center;
-            margin-top: 10px;
+
+        #level,
+        #timer {
+            text-align: center; /* Centra el texto */
+            margin-top: 10px; /* Espacio superior de 10px */
         }
     </style>
 </head>
+
 <body>
+    <!-- Encabezado del sitio con fondo azul y texto blanco centrado -->
     <header class="bg-primary text-white text-center p-3">
-        <h1>Mi Videojuego 2D</h1>
-        <img src="img/game-logo.png" alt="Logo del Videojuego" width="100">
+        <h1>Space Legend</h1>
+        <img src="img/game-logo.png" alt="Logo del Videojuego" width="50">
     </header>
+    
+    <!-- Contenido principal del sitio -->
     <main class="container my-3">
         <div class="col-12 text-center mt-3">
             <h2>Instrucciones</h2>
-            <p>Usa el mouse para eliminar los objetos que se mueven. ¡Obtén la mayor puntuación posible!</p>
+            <p>Usa el cursor para eliminar a los invasores.</p>
+            <p>¡Obtén la mayor puntuación posible eliminando a todos los que puedas!
+                Elimina a la mayoria de los OVNI que se aproximen (Minimo 60%)</p>
+            <p>¡QUE NO LLEGUEN A LA TIERRA!</p>
+
+            <!-- Elementos para mostrar la puntuación, el nivel y el tiempo restante -->
             <div id="score">Puntuación: 0 | Puntuación Más Alta: 0</div>
             <div id="level">Nivel: 1</div>
             <div id="timer">Tiempo restante: 60s</div>
         </div>
+        
+        <!-- Contenedor para el canvas del juego -->
         <div class="row">
             <div class="col-12">
-                <canvas id="game-canvas" width="800" height="600"></canvas>
+                <canvas id="game-canvas" width="800" height="600" 
+                    onmouseenter="changeCursor('laser.png')" 
+                    onmouseleave="resetCursor()">
+                </canvas>
             </div>
-            
         </div>
     </main>
+    
+    <!-- Pie de página con créditos del creador -->
     <footer class="bg-dark text-white text-center p-2">
         <p>Creado por Donovan Urazh Franco Flores</p>
+        <p>RapiDazh Flash! Flash!</p>
     </footer>
+    
+    <!-- Enlace al archivo JavaScript del juego -->
     <script src="app.js"></script>
+    
+    <!-- JavaScript interno para cambiar el cursor cuando se interactúa con el canvas -->
+    <script>
+        // Cambia el cursor a una imagen personalizada cuando el ratón entra en el canvas
+        function changeCursor(cursorImage) {
+            document.getElementById('game-canvas').style.cursor = 'url(img/laser.png), auto';
+        }
+
+        // Restaura el cursor predeterminado cuando el ratón sale del canvas
+        function resetCursor() {
+            document.getElementById('game-canvas').style.cursor = 'auto';
+        }
+    </script>
 </body>
 </html>
