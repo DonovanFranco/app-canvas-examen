@@ -8,8 +8,6 @@ const window_width = window.innerWidth * .75;
 canvas.height = window_height;
 canvas.width = window_width;
 
-canvas.style.background = "#3093f0";
-
 // Variables para la puntuación
 let score = 0;
 let highScore = localStorage.getItem('highScore') || 0; // Obtiene la puntuación más alta almacenada en localStorage
@@ -210,7 +208,12 @@ function startLevel() {
         }
     }, 1000);
 
-    setInterval(createCircle, 1000); // Crea un nuevo círculo cada segundo
+    const circleCreationInterval = setInterval(() => {
+        createCircle();
+        if (timeRemaining <= 0) {
+            clearInterval(circleCreationInterval);
+        }
+    }, 1000); // Crea un nuevo círculo cada segundo
 }
 
 function showLevelMessage(level) {
