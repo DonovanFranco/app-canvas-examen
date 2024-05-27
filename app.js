@@ -10,6 +10,12 @@ canvas.width = window_width;
 
 canvas.style.background = "#3093f0";
 
+// Variables para la puntuación
+let score = 0;
+let highScore = localStorage.getItem('highScore') || 0; // Obtiene la puntuación más alta almacenada en localStorage
+const scoreDisplay = document.getElementById('score');
+updateScoreDisplay(); // Muestra la puntuación al cargar la página
+
 // Variable para almacenar las coordenadas del mouse
 let mouseX = 0;
 let mouseY = 0;
@@ -17,9 +23,6 @@ let mouseY = 0;
 // Variable para almacenar la posición del clic
 let clickX = 0;
 let clickY = 0;
-
-// Variable para determinar si se hizo clic dentro del círculo
-let isClickedInsideCircle = false;
 
 class Circle {
     constructor(x, y, radius, color, text, speed) {
@@ -97,6 +100,7 @@ function updateCircles() {
     ctx.clearRect(0, 0, window_width, window_height);
     circles.forEach(circle => circle.update(ctx));
     checkCollisions();
+    updateScoreDisplay();
 }
 
 function checkCollisions() {
@@ -147,26 +151,18 @@ canvas.addEventListener('mousedown', function(evt) {
     circles.forEach((circle, index) => {
         if (circle.isPointInside(clickX, clickY)) {
             circles.splice(index, 1); // Elimina el círculo
+            score += 10; // Incrementa la puntuación
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('highScore', highScore); // Almacena la nueva puntuación más alta en localStorage
+            }
         }
     });
 });
 
-// Función para actualizar las coordenadas del mouse en el canvas
-function updateMouseCoordinates(context) {
-    context.font = "bold 15px cursive";
-    context.fillStyle = "black";
-    context.fillText(" X: " + mouseX, 20, 10); // Actualiza el texto con la coordenada X
-    context.fillText(" Y: " + mouseY, 20, 25); // Actualiza el texto con la coordenada Y
-}
-
-// Llama a la función para actualizar las coordenadas del mouse en cada frame
-function drawMouseCoordinates() {
-    ctx.save(); // Guarda el estado del contexto
-    updateMouseCoordinates(ctx); // Actualiza las coordenadas del mouse
-    ctx.restore(); // Restaura el estado del contexto
-    requestAnimationFrame(drawMouseCoordinates); // Llama recursivamente a la función
+function updateScoreDisplay() {
+    scoreDisplay.textContent = `Puntuación: ${score} | Puntuación Más Alta: ${highScore}`;
 }
 
 setInterval(createCircle, 1000); // Crea un nuevo círculo cada segundo
 updateCircles(); // Llama a la función para actualizar los círculos
-drawMouseCoordinates(); // Llama a la función para dibujar las coordenadas del mouse

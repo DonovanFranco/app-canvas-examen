@@ -1,44 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2.5 Interactividad con gráficos 2D</title>
-    <!-- Incluir Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Videojuego 2D</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Estilo adicional para el canvas */
-        #canvas {
-            border: 2px solid black; /* Borde negro de 2px */
+        canvas {
+            display: block;
+            margin: 0 auto;
+            background-image: url('img/fondo.jpg'); /* Cambiar la ruta por la ubicación de tu imagen */
+            background-size: cover;
         }
-        header img {
-            max-width: 100px;
-            height: auto;
+        body {
+            cursor: url('custom-cursor.png'), auto;
         }
-        main {
-            padding: 20px;
+        .custom-cursor {
+            cursor: url('custom-cursor.png'), auto;
+        }
+        #level, #timer {
+            text-align: center;
+            margin-top: 10px;
         }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <header class="text-center my-4">
-            <h1>Videojuego de Interactividad con Gráficos 2D</h1>
-            <img src="ruta/a/tu/imagen.png" alt="Imagen del Videojuego">
-        </header>
-        <main class="d-flex justify-content-center">
-            <canvas id="game-canvas" class="w-100"></canvas>
-        </main>
-        <footer class="text-center my-4">
-            <p>Creado por Donovan Urazh Franco</p>
-        </footer>
+    <header class="bg-primary text-white text-center p-3">
+        <h1>Mi Videojuego 2D</h1>
+        <img src="game-logo.png" alt="Logo del Videojuego" width="100">
+    </header>
+    <div class="col-12 text-center mt-3">
+        <h2>Instrucciones</h2>
+        <p>Usa el mouse para eliminar los objetos que se mueven. ¡Obtén la mayor puntuación posible!</p>
+        <div id="score">Puntuación: 0 | Puntuación Más Alta: 0</div>
+        <div id="level">Nivel: 1</div>
+        <div id="timer">Tiempo restante: 60s</div>
     </div>
-
-    <!-- Incluir Bootstrap JS (opcional) -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <main class="container my-3">
+        <div class="row">
+            <div class="col-12">
+                <canvas id="game-canvas" width="800" height="600"></canvas>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-dark text-white text-center p-2">
+        <p>Creado por [Tu Nombre]</p>
+    </footer>
     <script src="app.js"></script>
 </body>
-
 </html>
