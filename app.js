@@ -190,35 +190,46 @@ function startLevel() {
     circlesPopped = 0;
     timeRemaining = 60;
 
+    showLevelMessage(level);
+
     const levelInterval = setInterval(() => {
         timeRemaining--;
         updateTimerDisplay();
+
         if (timeRemaining <= 0) {
             clearInterval(levelInterval);
-            checkLevelCompletion();
+
+            if (circlesPopped >= circlesGenerated * 0.6) {
+                level++;
+                updateLevelDisplay();
+                startLevel();
+            } else {
+                alert('Fin del juego. No has reventado suficientes círculos.');
+                resetGame();
+            }
         }
     }, 1000);
 
     setInterval(createCircle, 1000); // Crea un nuevo círculo cada segundo
 }
 
-function checkLevelCompletion() {
-    const requiredPopped = circlesGenerated * 0.6;
-    if (circlesPopped >= requiredPopped) {
-        level++;
-        updateLevelDisplay();
-        startLevel();
-    } else {
-        alert("¡Fin del juego! No se alcanzó el objetivo.");
-        resetGame();
-    }
+function showLevelMessage(level) {
+    ctx.clearRect(0, 0, window_width, window_height);
+    ctx.font = "48px serif";
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.fillText(`Nivel ${level}`, window_width / 2, window_height / 2);
+
+    setTimeout(() => {
+        ctx.clearRect(0, 0, window_width, window_height);
+    }, 2000);
 }
 
 function resetGame() {
-    score = 0;
     level = 1;
-    updateScoreDisplay();
+    score = 0;
     updateLevelDisplay();
+    updateScoreDisplay();
     startLevel();
 }
 
