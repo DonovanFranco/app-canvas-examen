@@ -182,6 +182,40 @@ function updateTimerDisplay() {
     timerDisplay.textContent = `Tiempo restante: ${timeRemaining}s`;
 }
 
+function showLevelMessage(level) {
+    ctx.clearRect(0, 0, window_width, window_height);
+    ctx.font = "48px serif";
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.fillText(`Nivel ${level}`, window_width / 2, window_height / 2);
+
+    setTimeout(() => {
+        ctx.clearRect(0, 0, window_width, window_height);
+    }, 2000);
+}
+
+function showLevelStats() {
+    const percentagePopped = (circlesPopped / circlesGenerated) * 100;
+    const statsMessage = `Nivel ${level} completado.\nGenerados: ${circlesGenerated}\nReventados: ${circlesPopped}\nPorcentaje reventados: ${percentagePopped.toFixed(2)}%`;
+
+    ctx.clearRect(0, 0, window_width, window_height);
+    ctx.font = "24px serif";
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.fillText(statsMessage, window_width / 2, window_height / 2 - 50);
+
+    const button = document.createElement('button');
+    button.textContent = 'Siguiente Nivel';
+    button.style.position = 'absolute';
+    button.style.left = `${window_width / 2 - 50}px`;
+    button.style.top = `${window_height / 2 + 50}px`;
+    button.addEventListener('click', () => {
+        document.body.removeChild(button);
+        startLevel();
+    });
+    document.body.appendChild(button);
+}
+
 function startLevel() {
     circles = [];
     circlesGenerated = 0;
@@ -196,11 +230,10 @@ function startLevel() {
 
         if (timeRemaining <= 0) {
             clearInterval(levelInterval);
-
             if (circlesPopped >= circlesGenerated * 0.6) {
+                showLevelStats();
                 level++;
                 updateLevelDisplay();
-                startLevel();
             } else {
                 alert('Fin del juego. No has reventado suficientes círculos.');
                 resetGame();
@@ -208,24 +241,7 @@ function startLevel() {
         }
     }, 1000);
 
-    const circleCreationInterval = setInterval(() => {
-        createCircle();
-        if (timeRemaining <= 0) {
-            clearInterval(circleCreationInterval);
-        }
-    }, 1000); // Crea un nuevo círculo cada segundo
-}
-
-function showLevelMessage(level) {
-    ctx.clearRect(0, 0, window_width, window_height);
-    ctx.font = "48px serif";
-    ctx.fillStyle = "white";
-    ctx.textAlign = "center";
-    ctx.fillText(`Nivel ${level}`, window_width / 2, window_height / 2);
-
-    setTimeout(() => {
-        ctx.clearRect(0, 0, window_width, window_height);
-    }, 2000);
+    setInterval(createCircle, 1000); // Crea un nuevo círculo cada segundo
 }
 
 function resetGame() {
